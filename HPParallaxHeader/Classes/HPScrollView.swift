@@ -71,7 +71,7 @@ open class HPScrollView : UIScrollView {
     }
 
     deinit {
-        removeObserver(self, forKeyPath: #keyPath(contentOffset), context: &HPScrollView.KVOContext)
+        removeObserver(self, forKeyPath: #keyPath(UIScrollView.contentOffset), context: &HPScrollView.KVOContext)
         removeObservedViews()
     }
 }
