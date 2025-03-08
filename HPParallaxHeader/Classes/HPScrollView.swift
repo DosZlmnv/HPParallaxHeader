@@ -146,9 +146,13 @@ extension HPScrollView {
     }
     
     func removeObserver(from scrollView: UIScrollView) {
-        scrollView.removeObserver(self,
-                                  forKeyPath: #keyPath(UIScrollView.contentOffset),
-                                  context: &HPScrollView.KVOContext)
+        if scrollView.observationInfo != nil {
+            scrollView.removeObserver(
+                self,
+                forKeyPath: #keyPath(UIScrollView.contentOffset),
+                context: &HPScrollView.KVOContext
+            )
+        }
     }
 
     
@@ -213,7 +217,7 @@ extension HPScrollView {
 // MARK: - Scrolling views handlers
 extension HPScrollView {
     func addObservedView(_ scrollView: UIScrollView) {
-        guard !observedViews.contains(scrollView) else { return }
+        guard !observedViews.contains(where: { $0.value === scrollView }) else { return }
         observedViews.append(scrollView)
         addObserver(to: scrollView)
     }
